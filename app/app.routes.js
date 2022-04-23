@@ -8,7 +8,7 @@ angular.module('appModule')
     $stateProvider
       .state({
         name: 'app',
-        url: '/',
+        url: '/:filter',
         templateUrl: './pages/home-page/home-page.html',
         controller: 'homeController',
         controllerAs: 'homePageVm',

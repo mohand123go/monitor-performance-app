@@ -1,0 +1,10 @@
+.filter{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    .filter__clear-btn{
+        background-color: rgb(34, 143, 201);
+        color: white;
+        padding: 7px 10px;
+      }
+}
