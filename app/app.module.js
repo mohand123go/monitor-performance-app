@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import store from './store/store';
 import 'ngVue';
 import 'ngVue/build/plugins.js';
 import PerformancePageComponent from './pages/performance-page.vue';
@@ -9,6 +10,13 @@ angular.module('appModule', [
   'ngVue',
   'ngVue.plugins',
 ]);
+
+angular.module('appModule')
+  .config(($ngVueProvider) => {
+    $ngVueProvider.setRootVueInstanceProps({
+      store: store,
+    });
+  });
 
 angular.module('appModule').directive('vPerformancePage', (createVueComponent) => {
   return createVueComponent(Vue.component('performancePageComponent', PerformancePageComponent));
