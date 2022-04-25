@@ -11,13 +11,6 @@ angular.module('appModule', [
   'ngVue.plugins',
 ]);
 
-angular.module('appModule')
-  .config(($ngVueProvider) => {
-    $ngVueProvider.setRootVueInstanceProps({
-      store: store,
-    });
-  });
-
 angular.module('appModule').directive('vPerformancePage', (createVueComponent) => {
   return createVueComponent(Vue.component('performancePageComponent', PerformancePageComponent));
 });
@@ -25,3 +18,10 @@ angular.module('appModule').directive('vPerformancePage', (createVueComponent) =
 angular.module('appModule').directive('vPerformanceChart', (createVueComponent) => {
   return createVueComponent(Vue.component('performanceChartComponent', PerformanceChartComponent));
 });
+
+angular.module('appModule')
+  .config(($ngVueProvider) => {
+    $ngVueProvider.setRootVueInstanceProps({
+      store: store,
+    });
+  });
