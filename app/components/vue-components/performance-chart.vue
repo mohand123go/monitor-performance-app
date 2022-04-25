@@ -1,5 +1,7 @@
 <template>
   <div class="c-chart__container">
+    <input type="date" v-model="startDate" />
+    <input type="date" v-model="endDate" />
     <v-chart ref="chart" :option="chartOptions" />
   </div>
 </template>
@@ -32,43 +34,30 @@ export default {
   components: {
     VChart,
   },
-
   data() {
     return {
-      chartData: [
-        {
-          date_ms: 1641772800000,
-          performance: 0.2,
-        },
-        {
-          date_ms: 1641859200000,
-          performance: 0.33,
-        },
-        {
-          date_ms: 1641945600000,
-          performance: 0.53,
-        },
-        {
-          date_ms: 1642032000000,
-          performance: 0.31,
-        },
-        {
-          date_ms: 1642118400000,
-          performance: 0.65,
-        },
-        {
-          date_ms: 1642204800000,
-          performance: 0.88,
-        },
-        {
-          date_ms: 1642291200000,
-          performance: 0.07,
-        },
-      ],
+      startDate:null,
+      endDate:null,
     };
+  },
+  created() {
+    this.$store.dispatch("performance/UPDATE_CHART_DATA").catch(() => {
+      console.log("error");
+    });
   },
 
   computed: {
+    originChartData() {
+     return this.$store.getters["performance/getOriginChartData"];
+    },
+    chartData: {
+      get() {
+        return this.$store.getters["performance/getChartData"];
+      },
+      set(value) {
+        this.$store.commit("performance/UPDATE_CHART_DATA", value);
+      },
+    },
     initOptions() {
       return {
         width: "auto",
@@ -83,7 +72,7 @@ export default {
           left: "center",
         },
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           transitionDuration: 0,
           confine: false,
           hideDelay: 0,
@@ -131,11 +120,11 @@ export default {
     },
 
     xAxisData() {
-      return this.chartData.map((item) => this.formatDate(item.date_ms));
+      return this.chartData?.map((item) => this.formatDate(item?.date_ms));
     },
 
     yAxisData() {
-      return this.chartData.map((item) => +item.performance * 100);
+      return this.chartData?.map((item) => +item?.performance * 100);
     },
   },
 
@@ -143,6 +132,20 @@ export default {
     formatDate(dateInMs) {
       return moment(dateInMs).format("DD MMM YYYY");
     },
+    fiterChartDataByDate(startDate, endDate){  
+      const formateDateToInputFormat = (date) => moment(date).format("YYYY-MM-DD")
+      const filterChartData = this.originChartData.filter(({date_ms}) => moment(formateDateToInputFormat(date_ms)).isBetween(startDate, endDate, undefined, '[]'));
+      if(filterChartData.length) this.chartData = filterChartData
+      else this.chartData = this.originChartData
+    }
   },
+  watch:{
+    startDate(startDate){
+      this.fiterChartDataByDate(startDate, this.endDate);
+    },
+    endDate(endDate){
+      this.fiterChartDataByDate(this.startDate, endDate);
+    }
+  }
 };
 </script>
