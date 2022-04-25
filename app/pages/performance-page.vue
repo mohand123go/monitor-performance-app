@@ -13,9 +13,6 @@
 import PerformanceChartComponent from "../components/vue-components/performance-chart.vue";
 export default {
   name: "AboutPageComponent",
-  created(){
-    console.log(this.$store)
-  },
   components: {
     PerformanceChartComponent,
   },

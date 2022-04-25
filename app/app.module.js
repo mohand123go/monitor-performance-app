@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import store from './store/store';
+import store from './store';
 import 'ngVue';
 import 'ngVue/build/plugins.js';
 import PerformancePageComponent from './pages/performance-page.vue';
