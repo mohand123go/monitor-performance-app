@@ -1,21 +1,30 @@
 angular.module('appModule')
   .config(($locationProvider) => {
-    $locationProvider.html5Mode({
-      enabled: true,
-    });
+    $locationProvider.html5Mode(false);
   })
-  .config(($stateProvider) => {
+  .config(($stateProvider, $urlRouterProvider) => {
     $stateProvider
-      .state({
-        name: 'app',
-        url: '/:filter',
+      .state('app', {
+        url: '/home/:filter',
         templateUrl: './pages/home-page/home-page.html',
         controller: 'homeController',
         controllerAs: 'homePageVm',
       })
-      .state({
-        name: 'team-performance',
+      .state('team-performance', {
         url: '/team-performance',
         template: '<v-performance-page></v-performance-page>',
+      })
+      .state({
+        name: 'notFound',
+        url: '/404',
+        template: '<v-not-found-page></v-not-found-page>',
       });
+    $urlRouterProvider.otherwise(function ($injector, $location) {
+      var state = $injector.get('$state');
+      if ($location.path() === '') {
+        state.go('app', { filter: '' });
+      } else { state.go('notFound'); }
+
+      return $location.path();
+    });
   });

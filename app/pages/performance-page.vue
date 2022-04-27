@@ -1,8 +1,5 @@
 <template>
   <div class="c-dashboard">
-    <div class="c-filters__container">
-      <FilterComponent />
-    </div>
     <div class="c-dashboard__header">
       <performance-chart-component />
     </div>
@@ -11,12 +8,11 @@
 
 <script>
 import PerformanceChartComponent from "../components/vue-components/performance-chart.vue";
-import FilterComponent from "../components/vue-components/Filter.vue";
+
 export default {
   name: "AboutPageComponent",
   components: {
-    PerformanceChartComponent,
-    FilterComponent
+    PerformanceChartComponent
   },
 };
 </script>
