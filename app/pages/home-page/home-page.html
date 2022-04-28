@@ -3,11 +3,11 @@
     <v-filter v-on-filter="homePageVm.handleFilterEvent"
      v-props-employees="homePageVm.employees" v-props-filter-query-string="homePageVm.filterQueryString" ></v-filter>
   </div>
-  <employees-list  employees-list="homePageVm.employees"></employees-list>
+  <employees-list  employees-list="homePageVm.filterEmployee"></employees-list>
 
   <div class="c-dashboard__footer">
-    <button class="c-button">
-      Load More
+    <button class="c-button" ng-hide="homePageVm.isLastPage" ng-disabled="homePageVm.isLoading" ng-click="homePageVm.handleLoadMoreEmployees()">
+      {{ homePageVm.isLoading ? 'Loading...' : 'Load more' }}
     </button>
   </div>
 </div>
