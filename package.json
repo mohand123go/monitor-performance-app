@@ -42,6 +42,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open --progress",
-    "test": "jest"
+    "test": "jest",
+    "build":  "rimraf dist && webpack  --bail --progress --profile"
   }
 }
