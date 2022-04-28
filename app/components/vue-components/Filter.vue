@@ -16,12 +16,14 @@ export default {
   },
   watch: {
     employees(newVal) {
-      if (this.originalEmployees === null) {
+      if (this.originalEmployees === null || this.originalEmployees.length < newVal.length) {
         // set originalEmployees to the inital value of the employees prop
         this.originalEmployees = JSON.parse(JSON.stringify(newVal));
-        if (!this.searchString) {
-          this.searchString = this.filterQueryString;
-        }
+            if(this.filterQueryString !== this.searchString){
+              this.searchString = this.filterQueryString;
+            }else{
+              this.handleSearchString(this.filterQueryString);
+            }        
       }
     },
     searchString(term) {

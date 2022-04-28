@@ -3,6 +3,7 @@ import store from './store';
 import 'ngVue';
 import 'ngVue/build/plugins.js';
 import PerformancePageComponent from './pages/performance-page.vue';
+import NotFoundPageComponent from './pages/NotFoundPage.vue';
 import PerformanceChartComponent from './components/vue-components/performance-chart.vue';
 import FilterComponent from './components/vue-components/Filter.vue';
 
@@ -34,4 +35,8 @@ angular.module('appModule')
   });
 angular.module('appModule').directive('vFilter', (createVueComponent) => {
   return createVueComponent(Vue.component('filterComponent', FilterComponent));
+});
+
+angular.module('appModule').directive('vNotFoundPage', (createVueComponent) => {
+  return createVueComponent(Vue.component('notFoundPageComponent', NotFoundPageComponent));
 });
