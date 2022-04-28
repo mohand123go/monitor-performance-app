@@ -12,8 +12,11 @@ function homePageController(Employees, $location) {
   homePageVm.lastPageNumber = null;
 
   homePageVm.handleFilterEvent = function (employees, queryString) {
-    if (queryString) $location.search('filter', queryString);
-    else $location.search({});
+    if (queryString) {
+      $location.search('filter', queryString);
+      homePageVm.filterQueryString = queryString;
+    } else $location.search({});
+
     homePageVm.filterEmployee = employees;
   };
   homePageVm.handleLoadMoreEmployees = function () {
