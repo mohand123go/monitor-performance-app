@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import fiterChartDataByDate from '../../utils/fiterChartDataByDate';
 import moment from "moment";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
@@ -163,29 +164,31 @@ export default {
     formatDate(dateInMs) {
       return moment(dateInMs).format("DD MMM YYYY");
     },
-    fiterChartDataByDate(startDate, endDate) {
-      const formateDateToInputFormat = (date) =>
-        moment(date).format("YYYY-MM-DD");
-      const filterChartData = this.originChartData.filter(({ date_ms }) =>
-        moment(formateDateToInputFormat(date_ms)).isBetween(
-          startDate,
-          endDate,
-          undefined,
-          "[]"
-        )
+    handleDateChange() {
+      const startDate = this.startDate;
+      const endDate = this.endDate;
+      const originChartData = this.originChartData;
+      console.log( startDate,
+        endDate,
+        originChartData)
+      const filterChartData = fiterChartDataByDate(
+        startDate,
+        endDate,
+        originChartData
       );
       if (filterChartData.length) this.chartData = filterChartData;
-      else this.chartData = this.originChartData;
+      else this.chartData = originChartData;
     },
   },
-  watch: {
-    startDate(startDate) {
-      this.fiterChartDataByDate(startDate, this.endDate);
+   watch: {
+    startDate() {
+      this.handleDateChange();
     },
-    endDate(endDate) {
-      this.fiterChartDataByDate(this.startDate, endDate);
+    endDate() {
+      this.handleDateChange();
     },
   },
+
 };
 </script>
 <style lang="scss" >
